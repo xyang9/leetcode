@@ -1,0 +1,81 @@
+33. Search in Rotated Sorted Array
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        start, end = 0, len(nums) - 1
+        while start <= end:
+            middle = start + (end - start) // 2
+            print(middle)
+            if nums[middle] == target:
+                return middle
+            if nums[middle] >= nums[start] :
+                if target < nums[middle] and target >= nums[start]:
+                    end = middle - 1
+                else:
+                    start = middle + 1
+            if nums[middle] <= nums[end]:
+                if target > nums[middle] and target <= nums[end]:
+                    start = middle + 1
+                else:
+                    end = middle - 1
+        return -1
+81. Search in Rotated Sorted Array II
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> bool:
+        if len(nums) == 0: return False
+        start, end = 0, len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] == target:
+                return True
+            if nums[start] == nums[middle]  and nums[end] == nums[middle]:
+                start+=1
+                end-=1
+            elif nums[middle] >= nums[start]:
+                if target >= nums[start] and target <= nums[middle]:
+                    end = middle
+                else:
+                    start = middle
+            else:
+                if target >= nums[middle] and target <= nums[end]:
+                    start = middle
+                else:
+                    end = middle
+        if nums[start] == target: return True
+        if nums[end] == target: return True
+        return False
+ 153. Find Minimum in Rotated Sorted Array
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        if len(nums) == 0: return -1
+        start, end = 0, len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] < nums[end]:
+                end = middle
+            else:
+                start = middle + 1
+        if nums[start] < nums[end]:
+            return nums[start]
+        else:
+            return nums[end]
+154. Find Minimum in Rotated Sorted Array II
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        if len(nums) == 0: return -1
+        start, end = 0, len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] < nums[end]:
+                end = middle
+            elif nums[middle] > nums[end]:
+                start = middle + 1
+            else:
+                end-=1
+        if nums[start] < nums[end]:
+            return nums[start]
+        else:
+            return nums[end]
