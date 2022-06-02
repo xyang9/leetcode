@@ -1,0 +1,142 @@
+35. Search Insert Position
+
+def searchInsert(self, nums: List[int], target: int) -> int:
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        middle = left + (right - left) // 2
+        if nums[middle] == target:
+            return middle
+        elif nums[middle] > target:
+            right = middle - 1
+        else:
+            left = middle + 1
+    return left
+34. Find First and Last Position of Element in Sorted Array
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if len(nums) == 0:
+            return [-1, -1]
+        start = self.findFirst(nums, target)
+        if start == -1:
+            return [-1, -1]
+        end = self.findLast(nums, target)
+        return [start, end]
+    
+    def findFirst(self, nums, target):
+        start = 0
+        end = len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] < target:
+                start = middle
+            else:
+                end = middle
+        if nums[start] == target:
+            return start
+        if nums[end] == target:
+            return end
+        return -1
+    
+    def findLast(self, nums, target):
+        start = 0
+        end = len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] > target:
+                end = middle
+            else:
+                start = middle
+        if nums[end] == target:
+            return end      
+        if nums[start] == target:
+            return start
+        return -1
+374. Guess Number Higher or Lower
+
+class Solution:
+    def guessNumber(self, n: int) -> int:
+        start, end = 1, n
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if guess(middle) == 0:
+                return middle
+            elif guess(middle) == 1:
+                start = middle
+            else:
+                end = middle
+        if guess(start) == 0:
+            return start
+        return end
+278. First Bad Version
+
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        start, end = 1, n
+        while start < end:
+            middle = start + (end - start) // 2
+            if isBadVersion(middle):
+                end = middle
+            else:
+                start = middle + 1
+        return start
+162. Find Peak Element
+
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        start, end = 0, len(nums) - 1
+        while start + 1 < end:
+            middle = start + (end - start) // 2
+            if nums[middle] > nums[middle + 1]:
+                end = middle
+            else:
+                start = middle + 1
+        if nums[start] > nums[end]:
+            return start
+        return end
+167. Two Sum II - Input Array Is Sorted
+
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        if len(numbers) < 2:
+            return [-1, -1]
+        left, right = 0, len(numbers) - 1
+        while left < right:
+            sum = numbers[left] + numbers[right]
+            if target == sum:
+                return [left + 1, right + 1]
+            elif sum > target:
+                right-=1
+            else:
+                left+=1
+        return [-1, -1]
+275. H-Index II
+
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        length = len(citations)
+        start, end = 0, length - 1
+        while start <= end:
+            middle = start + (end - start) // 2
+            if citations[middle] == length - middle:
+                return length - middle
+            elif citations[middle] < length - middle:
+                start = middle + 1
+            else:
+                end = middle - 1
+        return length - start
+ 540. Single Element in a Sorted Array
+
+class Solution:
+    def singleNonDuplicate(self, nums: List[int]) -> int:
+        start, end = 0, len(nums) - 1
+        while start < end:
+            middle = 2 * ((end + start) // 4)
+            if nums[middle] == nums[middle + 1]:
+                start = middle + 2
+            else:
+                end = middle
+        return nums[start]
+————————————————
+版权声明：本文为CSDN博主「学习计算机的有余」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_57443877/article/details/124977942
